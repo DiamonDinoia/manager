@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "manager",
+  "description": "Manager orchestrator: pins down a checkable spec with the user, dispatches all work to difficulty-tiered subagents, and keeps its own context small.",
+  "owner": {
+    "name": "DiamonDinoia",
+    "url": "https://github.com/DiamonDinoia"
+  },
+  "plugins": [
+    {
+      "name": "manager",
+      "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
