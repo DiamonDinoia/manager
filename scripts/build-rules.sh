@@ -42,4 +42,13 @@ inclusion: always
 
 $plain"
 
+# OpenClaw / ClawHub: same body, short one-line description, homepage + license.
+write "$ROOT/.openclaw/skills/manager/SKILL.md" "---
+name: manager
+description: \"Manager orchestrator: pins down a checkable spec, dispatches work to tiered subagents, keeps its own context small.\"
+homepage: https://github.com/DiamonDinoia/manager
+license: MIT
+---
+$body"
+
 echo "built rule copies from $SKILL"

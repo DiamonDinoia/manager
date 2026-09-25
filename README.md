@@ -37,12 +37,17 @@ agent's session; dispatches batch per round-trip.
 | Amp / `AGENTS.md` harnesses | point the harness at this repo's `AGENTS.md`, or use `./.agents/` |
 | Devin | `./.devin-plugin/` |
 | Grok | `./.grok-plugin/` |
+| OpenClaw | copy `.openclaw/skills/manager` into `~/.openclaw/skills/` (ClawHub publishing is not set up yet) |
+| pi | `pi install git:github.com/DiamonDinoia/manager` |
 
 Restart the harness after installing. `/manager <task>` starts the role;
 "stop manager" ends it.
 
-Harnesses with real subagents (Claude Code, Codex, opencode) dispatch to the four
-tier agents. Rule-only harnesses get a self-gated rule: it activates on `/manager`
-and acts as the cheapest tier itself instead of dispatching. Not yet covered:
-OpenClaw, pi.
+Harnesses with real subagents (Claude Code, Codex, opencode, pi) dispatch to the
+four tier agents. Rule-only harnesses get a self-gated rule: it activates on
+`/manager` and acts as the cheapest tier itself instead of dispatching.
+
+Rule and skill copies are generated: edit `skills/manager/SKILL.md`, then run
+`scripts/build-rules.sh` before committing. `pi-extension` behavior is covered by
+`npm --prefix pi-extension test`.
 
