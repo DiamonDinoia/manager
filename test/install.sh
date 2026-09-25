@@ -15,7 +15,7 @@ check() { # name, command...
 SKILLS="manager team brainstorm spec parallel"
 
 # Every CLI answers its own --version before anything is gated on it.
-for c in claude codex gemini opencode skills gh; do check "$c --version: $($c --version 2>&1 | head -1)" "$c" --version; done
+for c in claude codex gemini opencode; do check "$c --version: $($c --version 2>&1 | head -1)" "$c" --version; done
 
 # Skill format: agentskills.io name rule and the 1024-character description limit, per skill.
 check "frontmatter name/description" python3 - "$repo" <<'EOF'
@@ -78,57 +78,6 @@ EOF
 check "gemini extension install" bash -c "yes | gemini extensions install '$repo' --consent"
 check "gemini extensions list shows orchestration" bash -c 'gemini extensions list 2>&1 | grep -q orchestration'
 check "gemini all 5 skills on disk" on_disk5 ~/.gemini/extensions/orchestration/skills
-
-# skills CLI: one command for Codex, opencode, Cursor and Copilot directories.
-# No --skill flag: the repo ships five skills and the installer must discover all of them (S8).
-check "npx skills add (all discovered)" skills add "$repo" -g -y -a codex -a opencode -a cursor -a github-copilot
-# skills 1.7 writes one copy to ~/.agents/skills: Codex, opencode, Cursor, Copilot read it.
-check "skills CLI -> ~/.agents/skills (all 5)" on_disk5 ~/.agents/skills
-check "skills ls -g shows all 5" bash -c \
-  'for s in manager team brainstorm spec parallel; do skills ls -g 2>&1 | grep -q "$s" || { echo "missing $s"; exit 1; }; done'
-# `-a '*'` covers the whole agentskills ecosystem: one universal copy plus a symlink per agent
-# home. --force: the universal copies exist already from the 4-agent run above.
-check "npx skills add --all agents" skills add --force "$repo" -g -y -a '*'
-check "all-agents: universal copies resolve" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     n=$(find -L ~ -mindepth 3 -path "*/skills/$s/SKILL.md" 2>/dev/null | wc -l)
-     [ "$n" -ge 40 ] || { echo "$s: only $n dirs"; exit 1; }
-   done'
-check "all-agents: key harness dirs" bash -c '
-  for s in manager team brainstorm spec parallel; do
-    for d in ~/.continue ~/.codeium/windsurf ~/.roo; do
-      [ -e "$d/skills/$s/SKILL.md" ] || { echo "missing $d/skills/$s"; exit 1; }
-    done
-  done'
-
-# gh skill: --from-local installs the checkout. Without a skill argument gh opens a TTY picker
-# and installs nothing non-interactively (proven in wave-B): name each skill explicitly.
-# --force below: the skills-CLI all-agents run above already linked some homes.
-check "gh skill install (claude-code, all 5)" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     gh skill install --force "'$repo'" $s --from-local --agent claude-code --scope user || exit 1
-   done'
-check "gh skill on disk (all 5)" on_disk5 ~/.claude/skills
-check "gh skill install opencode" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     gh skill install --force "'$repo'" $s --from-local --agent opencode --scope user || exit 1
-   done'
-check "opencode skill on disk (all 5)" on_disk5 ~/.config/opencode/skills
-check "gh skill install cursor" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     gh skill install --force "'$repo'" $s --from-local --agent cursor --scope user || exit 1
-   done'
-check "cursor skill on disk (all 5)" on_disk5 ~/.cursor/skills
-check "gh skill install github-copilot" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     gh skill install "'$repo'" $s --from-local --agent github-copilot --scope user || exit 1
-   done'
-check "copilot skill on disk (all 5)" on_disk5 ~/.copilot/skills
-check "gh skill install universal" bash -c \
-  'for s in manager team brainstorm spec parallel; do
-     gh skill install --force "'$repo'" $s --from-local --agent universal --scope user || exit 1
-   done'
-check "universal copy on disk (all 5)" on_disk5 ~/.agents/skills
 
 # By hand, as in the README, in a fresh home: link each skill dir.
 manual=$(mktemp -d)

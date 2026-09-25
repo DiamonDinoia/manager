@@ -27,15 +27,13 @@ rule-only harnesses have no session hook and keep their own defaults.
 | Claude Code | `claude plugin marketplace add DiamonDinoia/skill-orchestration && claude plugin install orchestration@orchestration --scope user` |
 | Codex CLI | `codex plugin marketplace add DiamonDinoia/skill-orchestration`, then `codex plugin add orchestration@orchestration` |
 | Gemini CLI | `gemini extensions install https://github.com/DiamonDinoia/skill-orchestration --consent` |
-| ~50 agents: opencode, Cursor, Copilot, Windsurf, Roo, Continue, ... | `npx skills add DiamonDinoia/skill-orchestration -g -y -a '*'` |
-| any `gh skill` agent | `for s in manager team brainstorm spec parallel; do gh skill install DiamonDinoia/skill-orchestration $s --agent claude-code --scope user; done` (gh picks skills interactively only; name them) |
-| opencode harness files (command + tier agents + skill links) | `git clone https://github.com/DiamonDinoia/skill-orchestration && ./skill-orchestration/install-opencode.sh` |
+| opencode (by hand, scripted) | `git clone https://github.com/DiamonDinoia/skill-orchestration && ./skill-orchestration/install-opencode.sh` |
 | by hand | `git clone https://github.com/DiamonDinoia/skill-orchestration && for s in manager team brainstorm spec parallel; do ln -s "$PWD/skill-orchestration/skills/$s" ~/.claude/skills/$s; done` |
 
-Every harness with a native format carries one in this repository: `.claude-plugin/` for Claude
-Code, `.codex-plugin/` (Codex prefers its own plugin manifest) and `gemini-extension.json`.
-`npx skills add` discovers all five skills from `skills/` in one shot; `gh skill` installs them
-named one by one (its no-argument form is an interactive picker and lands nothing in scripts).
+The three harnesses with a native manifest carry one in this repository: `.claude-plugin/` for
+Claude Code, `.codex-plugin/` for Codex, and `gemini-extension.json` for Gemini CLI. opencode has
+no plugin system — `install-opencode.sh` links the five skills, the `/manager` command and the
+tier agents from a checkout; anything else: symlink by hand (last row).
 
 Rule-only harnesses (Cursor rules, Cline, Windsurf, Kiro, Qoder, Grok, Devin, ...) receive the
 manager rule copy — the four other skills orchestrate subagents, which those harnesses lack.
