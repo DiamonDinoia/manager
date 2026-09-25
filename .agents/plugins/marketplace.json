@@ -1,16 +1,12 @@
 {
-  "name": "manager",
+  "name": "orchestration",
   "interface": {
-    "displayName": "Manager"
+    "displayName": "Orchestration"
   },
   "plugins": [
     {
-      "name": "manager",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/DiamonDinoia/manager.git",
-        "ref": "main"
-      },
+      "name": "orchestration",
+      "source": "./",
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"

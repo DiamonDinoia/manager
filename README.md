@@ -1,55 +1,63 @@
-# manager
+# orchestration
 
-A persistent manager role for agent harnesses: it pins down a checkable spec with
-the user, dispatches every unit of work to subagents by difficulty tier, and keeps
-its own context small under a hard budget.
+Five skills that share one pipeline: brainstorm explores a decision, spec pins it down,
+parallel and team execute it, and manager is the persistent role the others build on.
+Each harness maps the four dispatch tiers (`intern`/`junior`/`senior`/`principal`) to its
+own models; the skills name a tier, never a model.
 
-## Tiers
+| Skill | Does |
+|---|---|
+| `brainstorm` | Recon by dispatch → interpretations → one batched question round with recommendations → decision log |
+| `spec` | Turns decisions into deliverables, each with a check that can fail; accepted specs land in `memory/<project>/specs/` |
+| `parallel` | Executes a spec as disjoint-file dispatch units; `scripts/waves.py` (stdlib `graphlib`) computes waves and the critical path |
+| `team` | Multi-agent rounds (triage/plan/execute/review) in worktrees; the invoking agent assumes the manager role |
+| `manager` | Persistent orchestration role: spec first, tiered dispatch, hard context budget |
 
-The skill names a tier, never a model. Each harness maps tiers to its own models.
-
-| Tier | Takes |
-|------|-------|
-| `intern` | Mechanical: grep, filters, boilerplate, one-line checks |
-| `junior` | Well-specified implementation |
-| `senior` | Implementation with judgment calls; code review (default) |
-| `principal` | Numerics, SIMD, concurrency, performance, unclosed debugging, open-ended design |
-
-## Context budget
-
-Subagent reports cap at 30 lines; evidence over 10 lines goes to a file and returns
-a path; diffs and logs travel as path plus counts; follow-ups resume the producing
-agent's session; dispatches batch per round-trip.
+At session start the Claude Code hook runs `scripts/models.py`: it fetches the available model
+list from the already-configured provider (Anthropic or OpenAI API key, else the opencode
+registry), prints it into context, and the agent tiers the models itself — the only classifier
+that tracks new releases. Unconfigured or failed queries print an empty list (harness defaults)
+and never block the session; discoveries cache 24h in `~/.cache/orchestration/`. Codex and the
+rule-only harnesses have no session hook and keep their own defaults.
 
 ## Install
 
-| Harness | Install |
-|---------|---------|
-| Claude Code | `/plugin marketplace add DiamonDinoia/manager` then `/plugin install manager@manager` |
-| Codex | same as Claude Code (Codex reads Claude marketplaces) |
-| opencode | `git clone https://github.com/DiamonDinoia/manager ~/repos/manager && ~/repos/manager/install-opencode.sh` |
-| Gemini CLI | `gemini extensions install https://github.com/DiamonDinoia/manager` |
-| Cursor | copy `.cursor/rules/manager.mdc` into the project's `.cursor/rules/`, or use `./.cursor-plugin/` |
-| Kimi Code | `./.kimi-plugin/` |
-| Muse | `./.muse-plugin/` |
-| Windsurf | copy `.windsurf/rules/manager.md` into the project's `.windsurf/rules/` |
-| Cline | copy `.clinerules/manager.md` into the project's `.clinerules/` |
-| Kiro | copy `.kiro/steering/manager.md` into the project's `.kiro/steering/` |
-| Qoder | install via the Qoder plugin flow from this repo (`./.qoder-plugin/`) |
-| Amp / `AGENTS.md` harnesses | point the harness at this repo's `AGENTS.md`, or use `./.agents/` |
-| Devin | `./.devin-plugin/` |
-| Grok | `./.grok-plugin/` |
-| OpenClaw | copy `.openclaw/skills/manager` into `~/.openclaw/skills/` (ClawHub publishing is not set up yet) |
-| pi | `pi install git:github.com/DiamonDinoia/manager` |
+| Harness | Command |
+|---|---|
+| Claude Code | `claude plugin marketplace add DiamonDinoia/skill-orchestration && claude plugin install orchestration@orchestration --scope user` |
+| Codex CLI | `codex plugin marketplace add DiamonDinoia/skill-orchestration`, then `codex plugin add orchestration@orchestration` |
+| Gemini CLI | `gemini extensions install https://github.com/DiamonDinoia/skill-orchestration --consent` |
+| ~50 agents: opencode, Cursor, Copilot, Windsurf, Roo, Continue, ... | `npx skills add DiamonDinoia/skill-orchestration -g -y -a '*'` |
+| any `gh skill` agent | `for s in manager team brainstorm spec parallel; do gh skill install DiamonDinoia/skill-orchestration $s --agent claude-code --scope user; done` (gh picks skills interactively only; name them) |
+| opencode harness files (command + tier agents + skill links) | `git clone https://github.com/DiamonDinoia/skill-orchestration && ./skill-orchestration/install-opencode.sh` |
+| by hand | `git clone https://github.com/DiamonDinoia/skill-orchestration && for s in manager team brainstorm spec parallel; do ln -s "$PWD/skill-orchestration/skills/$s" ~/.claude/skills/$s; done` |
 
-Restart the harness after installing. `/manager <task>` starts the role;
-"stop manager" ends it.
+Every harness with a native format carries one in this repository: `.claude-plugin/` for Claude
+Code, `.codex-plugin/` (Codex prefers its own plugin manifest) and `gemini-extension.json`.
+`npx skills add` discovers all five skills from `skills/` in one shot; `gh skill` installs them
+named one by one (its no-argument form is an interactive picker and lands nothing in scripts).
 
-Harnesses with real subagents (Claude Code, Codex, opencode, pi) dispatch to the
-four tier agents. Rule-only harnesses get a self-gated rule: it activates on
-`/manager` and acts as the cheapest tier itself instead of dispatching.
+Rule-only harnesses (Cursor rules, Cline, Windsurf, Kiro, Qoder, Grok, Devin, ...) receive the
+manager rule copy — the four other skills orchestrate subagents, which those harnesses lack.
+Edit `skills/manager/SKILL.md` and run `scripts/build-rules.sh` to regenerate every rule copy.
 
-Rule and skill copies are generated: edit `skills/manager/SKILL.md`, then run
-`scripts/build-rules.sh` before committing. `pi-extension` behavior is covered by
-`npm --prefix pi-extension test`.
+Claude Code: in `/plugin`, enable auto-update for the `orchestration` marketplace.
+`claude plugin disable orchestration@orchestration` stops the skills. `claude plugin update
+orchestration@orchestration` pulls the new release.
 
+Restart the harness after installing. `/manager <task>` starts the role; "stop manager" ends it.
+The other four skills trigger on their descriptions or by name (`/team`, `/brainstorm`, ...).
+
+## Validation
+
+`test/run.sh` builds a container with each harness, installs the plugin with each mechanism and
+checks that each harness finds all five skills. A copy with an invalid skill name must fail on
+the name check. It also runs `skills/parallel/scripts/waves.py --selftest` from the installed copy.
+
+```sh
+test/run.sh   # podman, or: test/run.sh docker
+```
+
+## License
+
+MIT.

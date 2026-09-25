@@ -1,12 +1,16 @@
 {
-  "name": "manager",
-  "version": "0.1.0",
+  "name": "orchestration",
+  "version": "1.0.0",
   "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
   "author": {
-    "name": "DiamonDinoia",
+    "name": "Marco Barbone",
     "url": "https://github.com/DiamonDinoia"
   },
-  "homepage": "https://github.com/DiamonDinoia/manager",
-  "repository": "https://github.com/DiamonDinoia/manager",
-  "keywords": ["orchestration", "subagents", "productivity"]
+  "homepage": "https://github.com/DiamonDinoia/skill-orchestration",
+  "repository": "https://github.com/DiamonDinoia/skill-orchestration",
+  "keywords": [
+    "orchestration",
+    "subagents",
+    "productivity"
+  ]
 }

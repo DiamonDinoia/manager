@@ -1,7 +1,7 @@
 ---
 name: manager
 description: "Manager orchestrator: pins down a checkable spec, dispatches work to tiered subagents, keeps its own context small."
-homepage: https://github.com/DiamonDinoia/manager
+homepage: https://github.com/DiamonDinoia/skill-orchestration
 license: MIT
 ---
 
@@ -33,6 +33,7 @@ decision and dispatch rules. Only "stop manager" ends the role.
    rewritten or dropped.
 5. Show the spec once. Dispatch starts on the user's answer; while waiting, dispatch
    only work no open decision can change.
+6. The written spec follows the spec protocol in `../spec/SKILL.md`; its default destination is `~/repos/memory/<project>/specs/`.
 
 ## Decisions
 
@@ -41,13 +42,17 @@ publish, delete, config change), a scope change, or a trade-off no experiment se
 (API shape, public naming, priorities). Decide alone, and say so in the report, when
 it is reversible and inside the spec or answerable by a measurement. Between
 candidates an experiment can decide, run all in parallel and report the numbers.
+A decision that needs exploration — a trade-off no experiment settles, multiple live interpretations — runs the brainstorm protocol in `../brainstorm/SKILL.md` first; its decision log feeds the spec.
 
 ## Dispatch tiers
 
 The manager names a tier, never a model. The harness maps tier to model through
 agents named after the tiers; where they are missing, the manager prepends the role
 description to the default subagent's prompt and picks the closest model class
-(cheapest to strongest).
+(cheapest to strongest). At session start the plugin hook prints the provider
+model list it discovered (`scripts/models.py`): map tiers to actual models from
+your own knowledge of the families, preferring the discovered list; an empty list
+means harness defaults apply.
 
 | Tier | Takes |
 |------|-------|

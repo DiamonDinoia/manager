@@ -1,21 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "manager",
-  "description": "Manager orchestrator: pins down a checkable spec with the user, dispatches all work to difficulty-tiered subagents, and keeps its own context small.",
-  "owner": {
-    "name": "DiamonDinoia",
-    "url": "https://github.com/DiamonDinoia"
-  },
+  "name": "orchestration",
+  "description": "Orchestration suite: manager, team, brainstorm, spec and parallel skills for agent harnesses.",
+  "owner": { "name": "Marco Barbone", "url": "https://github.com/DiamonDinoia" },
   "plugins": [
     {
-      "name": "manager",
-      "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
-      "version": "0.1.0",
+      "name": "orchestration",
+      "description": "Orchestration suite for agent harnesses: manager (persistent tier-dispatch role), team (multi-agent rounds in worktrees), brainstorm (decision exploration), spec (deliverable+check specifications), parallel (wave-scheduled execution of a spec).",
       "source": "./",
-      "author": {
-        "name": "DiamonDinoia",
-        "url": "https://github.com/DiamonDinoia"
-      },
+      "author": { "name": "Marco Barbone", "url": "https://github.com/DiamonDinoia" },
       "category": "productivity"
     }
   ]

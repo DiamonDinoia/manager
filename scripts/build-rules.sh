@@ -46,7 +46,7 @@ $plain"
 write "$ROOT/.openclaw/skills/manager/SKILL.md" "---
 name: manager
 description: \"Manager orchestrator: pins down a checkable spec, dispatches work to tiered subagents, keeps its own context small.\"
-homepage: https://github.com/DiamonDinoia/manager
+homepage: https://github.com/DiamonDinoia/skill-orchestration
 license: MIT
 ---
 $body"

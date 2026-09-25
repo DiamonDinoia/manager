@@ -1,13 +1,13 @@
 {
-  "name": "manager",
+  "name": "orchestration",
   "description": "Manager orchestrator: pins down a checkable spec with the user, dispatches all work to difficulty-tiered subagents, and keeps its own context small.",
   "owner": {
-    "name": "DiamonDinoia",
+    "name": "Marco Barbone",
     "url": "https://github.com/DiamonDinoia"
   },
   "plugins": [
     {
-      "name": "manager",
+      "name": "orchestration",
       "description": "Persistent manager role with tiered dispatch and a hard context budget.",
       "source": "./",
       "category": "productivity"

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "name": "manager",
-  "displayName": "Manager",
-  "version": "0.1.0",
+  "name": "orchestration",
+  "displayName": "Orchestration",
+  "version": "1.0.0",
   "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
   "compat": {
     "source": "native",

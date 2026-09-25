@@ -1,13 +1,10 @@
 {
-  "name": "manager",
-  "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
-  "version": "0.1.0",
-  "author": {
-    "name": "DiamonDinoia",
-    "url": "https://github.com/DiamonDinoia"
-  },
-  "homepage": "https://github.com/DiamonDinoia/manager",
-  "repository": "https://github.com/DiamonDinoia/manager",
+  "name": "orchestration",
+  "description": "Orchestration suite for agent harnesses: manager (persistent tier-dispatch role), team (multi-agent rounds in worktrees), brainstorm (decision exploration), spec (deliverable+check specifications), parallel (wave-scheduled execution of a spec).",
+  "version": "1.0.0",
+  "author": { "name": "Marco Barbone", "url": "https://github.com/DiamonDinoia" },
+  "homepage": "https://github.com/DiamonDinoia/skill-orchestration",
+  "repository": "https://github.com/DiamonDinoia/skill-orchestration",
   "license": "MIT",
-  "keywords": ["orchestration", "subagents", "productivity"]
+  "keywords": ["orchestration", "subagents", "multi-agent", "planning", "productivity"]
 }
