@@ -29,7 +29,9 @@ agent's session; dispatches batch per round-trip.
 | Codex | same as Claude Code (Codex reads Claude marketplaces) |
 | opencode | `git clone https://github.com/DiamonDinoia/manager ~/repos/manager && ~/repos/manager/install-opencode.sh` |
 | Gemini CLI | `gemini extensions install https://github.com/DiamonDinoia/manager` |
-| Cursor | copy `.cursor/rules/manager.mdc` into the project's `.cursor/rules/` |
+| Cursor | copy `.cursor/rules/manager.mdc` into the project's `.cursor/rules/`, or use `./.cursor-plugin/` |
+| Kimi Code | `./.kimi-plugin/` |
+| Muse | `./.muse-plugin/` |
 | Windsurf | copy `.windsurf/rules/manager.md` into the project's `.windsurf/rules/` |
 | Cline | copy `.clinerules/manager.md` into the project's `.clinerules/` |
 | Kiro | copy `.kiro/steering/manager.md` into the project's `.kiro/steering/` |

@@ -1,5 +1,0 @@
-{
-  "name": "manager",
-  "version": "0.1.0",
-  "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget."
-}

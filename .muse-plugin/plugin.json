@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "name": "manager",
+  "displayName": "Manager",
+  "version": "0.1.0",
+  "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
+  "compat": {
+    "source": "native",
+    "manifestDir": ".muse-plugin"
+  },
+  "capabilities": {
+    "skills": [
+      {
+        "id": "manager",
+        "path": "skills/manager/SKILL.md"
+      }
+    ],
+    "commands": [
+      {
+        "id": "manager",
+        "path": "commands/manager.md"
+      }
+    ],
+    "hooks": [],
+    "mcpServers": [],
+    "reminders": []
+  }
+}

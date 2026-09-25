@@ -8,6 +8,20 @@
   },
   "homepage": "https://github.com/DiamonDinoia/manager",
   "repository": "https://github.com/DiamonDinoia/manager",
+  "license": "MIT",
   "keywords": ["orchestration", "subagents", "productivity"],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Manager",
+    "shortDescription": "Tiered subagent orchestration with a hard context budget",
+    "longDescription": "Pins down a checkable spec with the user, dispatches every unit of work to intern/junior/senior/principal subagents by difficulty, and keeps the manager's context small under hard caps on report size and inlined evidence.",
+    "developerName": "DiamonDinoia",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/DiamonDinoia/manager",
+    "defaultPrompt": [
+      "/manager implement the auth refactor",
+      "/manager hunt down the flaky CI failure"
+    ]
+  }
 }

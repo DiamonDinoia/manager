@@ -10,7 +10,12 @@
     {
       "name": "manager",
       "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
+      "version": "0.1.0",
       "source": "./",
+      "author": {
+        "name": "DiamonDinoia",
+        "url": "https://github.com/DiamonDinoia"
+      },
       "category": "productivity"
     }
   ]
