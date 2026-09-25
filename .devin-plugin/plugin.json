@@ -1,0 +1,12 @@
+{
+  "name": "manager",
+  "version": "0.1.0",
+  "description": "Persistent manager role with tiered dispatch (intern/junior/senior/principal) and a hard context budget.",
+  "author": {
+    "name": "DiamonDinoia",
+    "url": "https://github.com/DiamonDinoia"
+  },
+  "homepage": "https://github.com/DiamonDinoia/manager",
+  "repository": "https://github.com/DiamonDinoia/manager",
+  "keywords": ["orchestration", "subagents", "productivity"]
+}
